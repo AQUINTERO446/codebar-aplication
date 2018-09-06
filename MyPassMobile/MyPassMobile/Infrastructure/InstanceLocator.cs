@@ -1,7 +1,7 @@
 ﻿namespace MyPassMobile.Infrastructure
 {
     using ViewModels;
-    class InstanceLocator
+    public class InstanceLocator
     {
         #region Properties
         public MainViewModel Main

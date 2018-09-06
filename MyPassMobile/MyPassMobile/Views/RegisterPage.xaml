@@ -1,21 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyPassMobile.Views.LoginPage"
+             x:Class="MyPassMobile.Views.RegisterPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="MyPass">
+             Title="Registrarse">
     <ContentPage.Content>
         <ScrollView
-            BindingContext="{Binding Login}">
+            BindingContext="{Binding Register}">
             <AbsoluteLayout>
                 <StackLayout
                     AbsoluteLayout.LayoutBounds="0,0,1,1" 
                     AbsoluteLayout.LayoutFlags="All"
                     Padding="5">
-                    <Image
-                        Source="input"
-                        HeightRequest="200">
-                    </Image>
                     <Grid
                         Margin="10,0"
                         VerticalOptions="CenterAndExpand">
@@ -26,50 +22,70 @@
                         <Label
                             Grid.Row="0"
                             Grid.Column="0"
-                            Text="E-Mail"
+                            Text="Nombres"
                             VerticalOptions="Center">
                         </Label>
                         <Entry
                             Grid.Row="0"
                             Grid.Column="1"
-                            Keyboard="Email"
-                            Text="{Binding Email, Mode=TwoWay}"
-                            Placeholder="Ingresa tu email...">
+                            Text="{Binding Name, Mode=TwoWay}"
+                            Placeholder="Ingresa tus nombres...">
                         </Entry>
                         <Label
                             Grid.Row="1"
                             Grid.Column="0"
-                            Text="Contraseña"
+                            Text="Apellidos"
                             VerticalOptions="Center">
                         </Label>
                         <Entry
                             Grid.Row="1"
                             Grid.Column="1"
+                            Text="{Binding LastName, Mode=TwoWay}"
+                            Placeholder="Ingresa tus apellidos...">
+                        </Entry>
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Text="Email"
+                            VerticalOptions="Center">
+                        </Label>
+                        <Entry
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Text="{Binding Email, Mode=TwoWay}"
+                            Placeholder="Ingresa tu email...">
+                        </Entry>
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Text="Cedula"
+                            VerticalOptions="Center">
+                        </Label>
+                        <Entry
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Text="{Binding Id, Mode=TwoWay}"
+                            Placeholder="Ingresa tu numero de cedula...">
+                        </Entry>
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            Text="Contraseña"
+                            VerticalOptions="Center">
+                        </Label>
+                        <Entry
+                            Grid.Row="4"
+                            Grid.Column="1"
                             IsPassword="true"
                             Text="{Binding Password, Mode=TwoWay}"
                             Placeholder="Ingresa tu contraseña...">
                         </Entry>
+                        
                     </Grid>
-
-                    <StackLayout
-                        Margin="10,0"
-                        Orientation="Horizontal"
-                        VerticalOptions="CenterAndExpand">
-                        <Label
-                            HorizontalOptions="StartAndExpand"
-                            Text="Recordar este dispositivo..."
-                            VerticalOptions="Center">
-                        </Label>
-                        <Switch
-                            IsToggled="{Binding IsRemembered, Mode=TwoWay}"
-                            HorizontalOptions="End">
-                        </Switch>
-                    </StackLayout>
                     <Label
                         HorizontalOptions="Center"
-                        Text="¿Olvidaste tu contraseña?"
-                        TextColor="Blue"
-                        VerticalOptions="CenterAndExpand">
+                        Text="Foto de la Cedula"
+                        VerticalOptions="Center">
                     </Label>
                     <StackLayout
                         Margin="40,0"
@@ -78,21 +94,21 @@
                         <Button
                             BackgroundColor="Navy"
                             BorderRadius="23"
-                            Command="{Binding LoginCommand}"
+                            Command="{Binding FrontalIdCommand}"
                             HeightRequest="46"
                             HorizontalOptions="FillAndExpand"
                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                            Text="Login"
+                            Text="Frontal"
                             TextColor="White">
                         </Button>
                         <Button
                             BackgroundColor="Navy"
                             BorderRadius="23"
-                            Command="{Binding RegisterCommand}"
+                            Command="{Binding BackIdCommand}"
                             HeightRequest="46"
                             HorizontalOptions="FillAndExpand"
                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                            Text="Registrarse"
+                            Text="Trasera"
                             TextColor="White">
                         </Button>
                     </StackLayout>
@@ -100,13 +116,16 @@
                         HorizontalOptions="Center"
                         Orientation="Horizontal"
                         VerticalOptions="EndAndExpand">
-                        <Image
-                            Source="mail"
-                            HeightRequest="90">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding LoginEmailComand}"/>
-                            </Image.GestureRecognizers>
-                        </Image>
+                        <Button
+                            BackgroundColor="Navy"
+                            BorderRadius="23"
+                            Command="{Binding RegisterCommand}"
+                            HeightRequest="46"
+                            HorizontalOptions="FillAndExpand"
+                            IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                            Text="Guardar"
+                            TextColor="White">
+                        </Button>
                     </StackLayout>
                 </StackLayout>
                 <ActivityIndicator
