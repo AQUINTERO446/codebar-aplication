@@ -1,8 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyPassMobile.App">
-	<Application.Resources>
+<Application 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:infra="clr-namespace:MyPassMobile.Infrastructure"
+    x:Class="MyPassMobile.App">
+    <Application.Resources>
+        <ResourceDictionary>
+
+
+            <!-- Parameters -->
+            <infra:InstanceLocator x:Key="Locator"/>
+
+        </ResourceDictionary>
     
 	</Application.Resources>
 </Application>

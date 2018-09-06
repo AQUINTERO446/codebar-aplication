@@ -5,16 +5,21 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace MyPassMobile
 {
+    using Views;
+
 	public partial class App : Application
 	{
-		public App ()
-		{
-			InitializeComponent();
+        #region Constructors
+        public App()
+        {
+            InitializeComponent();
 
-			MainPage = new MainPage();
-		}
+            MainPage = new NavigationPage(new LoginPage());
+        }
+        #endregion
 
-		protected override void OnStart ()
+        #region Methods
+        protected override void OnStart ()
 		{
 			// Handle when your app starts
 		}
@@ -28,5 +33,6 @@ namespace MyPassMobile
 		{
 			// Handle when your app resumes
 		}
-	}
+        #endregion
+    }
 }
