@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyPassMobile.Services;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,9 @@ namespace MyPassMobile.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        #region Attributes
+        #endregion
+
         #region ViewModels
         public LoginViewModel Login
         {
@@ -22,6 +26,7 @@ namespace MyPassMobile.ViewModels
         #region Constructors
         public MainViewModel()
         {
+            instance = this;
             this.Login = new LoginViewModel();
         }
         #endregion

@@ -1,9 +1,9 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using MyPassMobile.Services;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 
 namespace MyPassMobile.ViewModels
 {
@@ -16,6 +16,11 @@ namespace MyPassMobile.ViewModels
         private string password;
         private int? id;
         private bool isRunning;
+        private string barCode;
+        private ImageSource imageSourceFront;
+        private ImageSource imageSourceBack;
+        private MediaFile file;
+        private ScanService scanService;
         #endregion
 
         #region Properties
@@ -24,6 +29,13 @@ namespace MyPassMobile.ViewModels
             get { return this.name; }
             set { SetValue(ref this.name, value); }
         }
+
+        public string BarCode
+        {
+            get { return this.barCode; }
+            set { SetValue(ref this.barCode, value); }
+        }
+
         public string LastName
         {
             get { return this.lastName; }
@@ -34,6 +46,18 @@ namespace MyPassMobile.ViewModels
         {
             get { return this.id; }
             set { SetValue(ref this.id, value); }
+        }
+
+        public ImageSource ImageSourceFront
+        {
+            get { return this.imageSourceFront; }
+            set { SetValue(ref this.imageSourceFront, value); }
+        }
+
+        public ImageSource ImageSourceBack
+        {
+            get { return this.imageSourceBack; }
+            set { SetValue(ref this.imageSourceBack, value); }
         }
 
         public string Email
@@ -59,6 +83,8 @@ namespace MyPassMobile.ViewModels
         #region Constructors
         public RegisterViewModel()
         {
+            scanService = new ScanService();
+
             this.Name = "Andres";
             this.LastName = "Quintero Galvan";
             this.Id = 99999999;
@@ -78,6 +104,10 @@ namespace MyPassMobile.ViewModels
 
         private async void Register()
         {
+            await Application.Current.MainPage.DisplayAlert(
+                    "Lectura de Scaner",
+                    "Errorrrr",
+                    "Aceptar");
             #region ValidationInput
             if (this.Id != null && this.Id != 0)
             {
@@ -141,9 +171,54 @@ namespace MyPassMobile.ViewModels
             }
         }
 
-        public void FrontalId()
+        public async void FrontalId()
         {
+            await CrossMedia.Current.Initialize();
+            if (CrossMedia.Current.IsCameraAvailable &&
+                CrossMedia.Current.IsTakePhotoSupported)
+            {
+                var source = await Application.Current.MainPage.DisplayActionSheet(
+                    "¿De donde quieres tomar la imagen?",
+                    "Cancelar",
+                    null,
+                    "Desde la galería",
+                    "Desde la cámara");
 
+                if (source == "Cancelar")
+                {
+                    this.file = null;
+                    return;
+                }
+
+                if (source == "Desde la cámara")
+                {
+                    this.file = await CrossMedia.Current.TakePhotoAsync(
+                        new StoreCameraMediaOptions
+                        {
+                            Directory = "Sample",
+                            Name = "test.jpg",
+                            PhotoSize = PhotoSize.Small,
+                        }
+                    );
+                }
+                else
+                {
+                    this.file = await CrossMedia.Current.PickPhotoAsync();
+                }
+            }
+            else
+            {
+                this.file = await CrossMedia.Current.PickPhotoAsync();
+            }
+
+            if (this.file != null)
+            {
+                this.ImageSourceFront = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    return stream;
+                });
+            }
         }
 
         public ICommand BackIdCommand
@@ -154,9 +229,13 @@ namespace MyPassMobile.ViewModels
             }
         }
 
-        public void BackId()
+        public async void BackId()
         {
-
+            string BarCode = await scanService.Scanner();
+            await Application.Current.MainPage.DisplayAlert(
+                    "Lectura de Scaner",
+                    BarCode,
+                    "Aceptar");
         }
 
         #endregion

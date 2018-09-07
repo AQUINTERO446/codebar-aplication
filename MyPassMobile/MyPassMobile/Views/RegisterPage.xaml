@@ -113,6 +113,27 @@
                         </Button>
                     </StackLayout>
                     <StackLayout
+                        Margin="40,0"
+                        Orientation="Horizontal"
+                        VerticalOptions="CenterAndExpand">
+                        <Image 
+                        Aspect="AspectFill"
+                        HeightRequest="125"
+                        Source="{Binding ImageSourceFront}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding FrontalIdCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image 
+                        Aspect="AspectFill"
+                        HeightRequest="125"
+                        Source="{Binding ImageSourceBack}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BackIdCommand}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                    <StackLayout
                         HorizontalOptions="Center"
                         Orientation="Horizontal"
                         VerticalOptions="EndAndExpand">
